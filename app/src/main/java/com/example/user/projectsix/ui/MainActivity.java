@@ -32,19 +32,19 @@ public class MainActivity extends AppCompatActivity implements DownloadResultRec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /* Set activity layout */
+        // Set activity layout
         setContentView(R.layout.activity_gridview);
-        /* Initialize gridView */
+        // Initialize gridView
         mGridView = (GridView) findViewById(R.id.gridView);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        /* Starting Download Service */
+        // Starting Download Service
         mReceiver = new DownloadResultReceiver(new Handler());
         mReceiver.setReceiver(this);
         Intent intent = new Intent(Intent.ACTION_SYNC, null, this, DownloadService.class);
 
-        /* Send optional extras to Download IntentService */
+        // Send optional extras to Download IntentService
         intent.putExtra("url", Consts.IMAGE_URL_ARRAY);
         intent.putExtra("receiver", mReceiver);
 
@@ -55,29 +55,29 @@ public class MainActivity extends AppCompatActivity implements DownloadResultRec
     public void onReceiveResult(int resultCode, Bundle resultData) {
         switch (resultCode) {
             case DownloadService.STATUS_RUNNING:
-                /* Show progress bar*/
+                // Show progress bar
                 mProgressBar.setVisibility(View.VISIBLE);
                 break;
 
             case DownloadService.STATUS_ADD_IMAGES:
-                /* Extract result from bundle and fill GridData */
+                // Extract result from bundle and fill GridData
                 byte[] imageByteArray = resultData.getByteArray("result");
                 mBitmap = BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.length);
                 GridItem item = new GridItem();
-                item.setmImage(mBitmap);
+                item.setImage(mBitmap);
                 mGridData.add(item);
                 break;
 
             case DownloadService.STATUS_FINISHED:
-                /* Hide progress */
+                // Hide progress
                 mProgressBar.setVisibility(View.GONE);
-                /* Update GridView with result */
-                mGridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, mGridData);
+                // Update GridView with result
+                mGridAdapter = new GridViewAdapter(this, mGridData);
                 mGridView.setAdapter(mGridAdapter);
                 break;
 
             case DownloadService.STATUS_ERROR:
-                /* Handle the error */
+                // Handle the error
                 String error = resultData.getString(Intent.EXTRA_TEXT);
                 Toast.makeText(this, error, Toast.LENGTH_LONG).show();
                 break;

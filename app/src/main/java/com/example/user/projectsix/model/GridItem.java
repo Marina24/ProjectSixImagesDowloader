@@ -12,19 +12,19 @@ public class GridItem {
         super();
     }
 
-    public Bitmap getmImage() {
+    public Bitmap getImage() {
         return mImage;
     }
 
-    public void setmImage(Bitmap mImage) {
+    public void setImage(Bitmap mImage) {
         this.mImage = mImage;
     }
 
-    public String getmTitle() {
+    public String getTitle() {
         return mTitle;
     }
 
-    public void setmTitle(String mTitle) {
+    public void setTitle(String mTitle) {
         this.mTitle = mTitle;
     }
 }

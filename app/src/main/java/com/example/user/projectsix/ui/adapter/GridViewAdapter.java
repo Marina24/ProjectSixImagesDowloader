@@ -19,12 +19,11 @@ import java.util.ArrayList;
 public class GridViewAdapter extends BaseAdapter {
 
     private Context mContext;
-    private int layoutResourceId;
+    private LayoutInflater mInflater;
     private ArrayList<GridItem> mGridData = new ArrayList<>();
 
 
-    public GridViewAdapter(Context mContext, int layoutResourceId, ArrayList<GridItem> mGridData) {
-        this.layoutResourceId = layoutResourceId;
+    public GridViewAdapter(Context mContext, ArrayList<GridItem> mGridData) {
         this.mContext = mContext;
         this.mGridData = mGridData;
     }
@@ -55,8 +54,8 @@ public class GridViewAdapter extends BaseAdapter {
         ViewHolder holder;
 
         if (row == null) {
-            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-            row = inflater.inflate(layoutResourceId, parent, false);
+            mInflater = LayoutInflater.from(parent.getContext());
+            row = mInflater.inflate(R.layout.grid_item_layout, parent, false);
             holder = new ViewHolder();
             holder.titleTextView = (TextView) row.findViewById(R.id.txtGridItemTitle);
             holder.imageView = (ImageView) row.findViewById(R.id.imgGridItem);
@@ -66,9 +65,9 @@ public class GridViewAdapter extends BaseAdapter {
         }
 
         GridItem item = mGridData.get(position);
-        mGridData.get(position).setmTitle(Consts.TITLE[position]);
-        holder.titleTextView.setText(item.getmTitle());
-        holder.imageView.setImageBitmap(item.getmImage());
+        mGridData.get(position).setTitle(Consts.TITLE[position]);
+        holder.titleTextView.setText(item.getTitle());
+        holder.imageView.setImageBitmap(item.getImage());
         return row;
     }
 }

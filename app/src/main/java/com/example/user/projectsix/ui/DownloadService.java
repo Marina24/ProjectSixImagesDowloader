@@ -37,13 +37,13 @@ public class DownloadService extends IntentService {
 
         Bundle bundle = new Bundle();
         if (!(urls.length == 0)) {
-            /* Update UI: Download Service is Running */
+            // Update UI: Download Service is Running
             receiver.send(STATUS_RUNNING, Bundle.EMPTY);
             try {
                 for (int i = 0; i < urls.length; i++) {
                     byte[] oneImage = downloadData(urls[i]);
 
-                /* Sending result back to activity */
+                    // Sending result back to activity
                     if (null != oneImage && oneImage.length > 0) {
                         bundle.putByteArray("result", oneImage);
                         receiver.send(STATUS_ADD_IMAGES, bundle);
@@ -51,7 +51,7 @@ public class DownloadService extends IntentService {
                 }
             } catch (Exception e) {
 
-                /* Sending error message back to activity */
+                // Sending error message back to activity
                 bundle.putString(Intent.EXTRA_TEXT, e.toString());
                 receiver.send(STATUS_ERROR, bundle);
             }
@@ -71,7 +71,7 @@ public class DownloadService extends IntentService {
         urlConnection = (HttpURLConnection) url.openConnection();
 
         int statusCode = urlConnection.getResponseCode();
-            /* 200 represents HTTP OK */
+        //200 represents HTTP OK
         if (statusCode == 200) {
             inputStream = new BufferedInputStream(urlConnection.getInputStream());
 
